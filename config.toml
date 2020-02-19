@@ -1,4 +1,4 @@
-baseURL = "http://sandeshdamkondwar.github.io/"
+baseURL = "https://sandeshdamkondwar.github.io/"
 languageCode = "en-us"
 title = "Sandesh Damkondwar"
 theme = "noteworthy"

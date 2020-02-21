@@ -1,4 +1,4 @@
-baseURL = "https://sandeshdamkondwar.github.io/"
+baseURL = "https://sandeshd.tech/"
 languageCode = "en-us"
 title = "Sandesh Damkondwar"
 theme = "noteworthy"
@@ -6,7 +6,7 @@ publishDir = "docs"
 
 [params]
     # Main
-    email = "sandeshdamkondwar@gmail.com"
+    email = "mailto:sandeshdamkondwar@gmail.com"
     twitter = "https://twitter.com/sandydamy"
     pinterest = "https://in.pinterest.com/sandydamy"
     linkedin = "http://linkedin.com/in/sandeshdamkondwar"

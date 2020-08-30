@@ -1,6 +1,6 @@
 baseURL = "https://sandeshdamkondwar.github.io/"
 languageCode = "en-us"
-title = "SandeshDamkondwar"
+title = "Sandesh Damkondwar"
 theme = "noteworthy"
 publishDir = "docs"
 

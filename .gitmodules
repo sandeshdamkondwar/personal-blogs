@@ -1,4 +1,4 @@
-[submodule "docs"]
-	path = docs
-	url = git@github.com:sandeshdamkondwar/sandeshdamkondwar.github.io.git
-	branch = master
+# [submodule "docs"]
+# 	path = docs
+# 	url = git@github.com:sandeshdamkondwar/sandeshdamkondwar.github.io.git
+# 	branch = master

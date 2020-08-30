@@ -1,4 +1,7 @@
-# [submodule "docs"]
-# 	path = docs
-# 	url = git@github.com:sandeshdamkondwar/sandeshdamkondwar.github.io.git
-# 	branch = master
+[submodule "themes/noteworthy"]
+	path = themes/noteworthy
+	url = https://github.com/kimcc/hugo-theme-noteworthy.git
+[submodule "docs"]
+	path = docs
+	url = git@github.com:sandeshdamkondwar/sandeshdamkondwar.github.io.git
+	branch = master

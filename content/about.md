@@ -12,6 +12,8 @@ My realm is front-end development, where I bring web designs to life with the fi
 
 When I'm off-duty, you'll find me immersed in the latest tech news or indulging in my passion for online shopping. Let's connect to talk tech, exchange ideas, or just share our latest digital discoveries!
 
+Off the clock, I moonlight as a Dad & Husband — a role with zero PTO and questionable code review standards. If I'm not at my desk, I'm probably out playing baseball or cricket with my kid, losing on purpose (mostly) :)
+
 ## Work
 
 [AlphaSense](https://www.alpha-sense.com) — Mar 2026 – Present

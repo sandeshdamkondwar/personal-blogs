@@ -8,6 +8,8 @@ draft: false
 
 Our journey of delivering a product with the least downtime.
 
+![Hero](https://miro.medium.com/v2/resize:fit:1400/1*AvkKHeYupfK-0XOLUujsQw.png)
+
 The Payments Dashboard is the face of Razorpay business, which every merchant uses to check the order, payment, settlements, and do many other everyday activities. Hence, it is essential to provide a seamless, crash-free experience to our merchants on the Payments Dashboard.
 
 ## The Problem Was Serious
@@ -44,14 +46,26 @@ This was perhaps the most difficult piece since multiple teams were contributing
 - Created a new custom dashboard providing a snapshot of all errors happening across different teams and the availability status of their features
 - Marked team owners at the route-level to make sure errors occurring on those routes were assigned to the right owners
 - Wrote the `ErrorBoundary` wrapper for wrapping complex components, which can automatically tag the team and set the priority
+
+![Custom ErrorBoundary Component](https://miro.medium.com/v2/resize:fit:1400/1*vWEaRPNPy2_8n70IUWKDYQ.png)
+
 - Created routing rules in the codebase as well as in error monitoring tools to tag the right team based on the stack, file path, and URL
+
+![Custom Dashboard for Error Monitoring](https://miro.medium.com/v2/resize:fit:1400/0*c2qF5KZAFk5i49P_)
 
 ### 2. Identified and Fixed the Issues
 
 - Refactored and gathered data points from multiple stakeholders to have clear ownership of all parts of the Payments Dashboard
 - Gave all teams a personalized dashboard to deep-dive and focus on high volume and critical errors easily
 - After finding the right stakeholders, we gave all teams a fixed timeline — all teams worked in tandem and resolved all bugs and issues within 2 months
-- Reduced errors from 7000 errors/hr to ~28 errors/hr on average
+
+Before (crashes at ~7000 errors/hour on average):
+
+![Before: Crashes at 7000/hr](https://miro.medium.com/v2/resize:fit:768/0*TiyxGgttzXSCH43O)
+
+After (crashes dropped to ~28 errors/hour):
+
+![After: Crashes at 28/hr](https://miro.medium.com/v2/resize:fit:1400/0*l1fg9oaacZ8Xo65v)
 
 ### 3. Added Checks to Avoid New Issues
 
@@ -75,13 +89,27 @@ Solving the existing issues was just solving the current challenges. We wanted t
 - Added end-to-end test suite on production environment with 0% traffic
 - Halted deployment if the end-to-end suite fails
 
+![Halt deployment on Automation](https://miro.medium.com/v2/resize:fit:1400/0*CbUtJfnwbPE9qnuI)
+
+![Halt deployment on Pre-production](https://miro.medium.com/v2/resize:fit:1400/0*n3xXlcXl0KAYKXIy)
+
+Stronger checks on the build pipeline, PR, and deployment:
+
+![Stronger checks on build pipeline](https://miro.medium.com/v2/resize:fit:1400/1*GjadLdf45bqupORHMDxpeg.png)
+
+![Stronger checks on PR](https://miro.medium.com/v2/resize:fit:1400/1*zzgiZDq_U4dyTCeSh1C4tg.png)
+
+![Stronger checks on deployment](https://miro.medium.com/v2/resize:fit:1400/1*z7wNiZmEUb01Ezxu4p9YAw.png)
+
 These checks resulted in avoiding more than 10 bad deployments which had breaking changes in the last 3 months.
 
 ### 4. Reduced the Incidents & MTTA
 
 We realized that no system can be built foolproof despite adding all possible checks while building and deploying. So, we integrated our error monitoring tool with PagerDuty to report critical incidents immediately to our engineers through a phone call.
 
-Every week, we conducted action review logs with the stakeholders to reduce the number of incidents and the MTTA. We reduced incidents from 40 incidents/month to 7 incidents/month.
+Every week, we conducted action review logs with the stakeholders to reduce the number of incidents and the MTTA.
+
+![Incidents dropped to 7/month from 40/month](https://miro.medium.com/v2/resize:fit:1400/0*SAFqbl3TxBS0ppd2)
 
 ### 5. Faster Rollbacks in Case of Incidents
 

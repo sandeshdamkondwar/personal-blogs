@@ -8,6 +8,8 @@ draft: false
 
 Journey on how we made the merchant experience better — Part 1: Engineering Process
 
+![Hero](https://miro.medium.com/v2/resize:fit:1400/1*TsOs5EAAoPd84u27Xw_nVQ.jpeg)
+
 ## TL;DR
 
 At Razorpay, we were experiencing user dropouts for a variety of reasons, particularly during the onboarding process, which resulted in an 89% user dropout.
@@ -64,7 +66,15 @@ The design team chose a customer-centered approach, so they dove in and did a lo
 - We invited our merchants to participate based on their availability and interest in providing constructive feedback
 - We conducted the survey with participants and did qualitative analysis on survey result
 
-Our previous onboarding procedure was desktop-first, lacked user engagement, and involved lengthy forms. The new onboarding process is conversational onboarding to increase user engagement; it's assistive in nature, it focuses on one question at a time, it shows the progress of completion, and it's mobile-first in design.
+Our previous onboarding procedure was desktop-first, lacked user engagement, and involved lengthy forms:
+
+![Old Onboarding Process](https://miro.medium.com/v2/0*_rE0sIWgejOcGL4V)
+
+The new onboarding process is conversational onboarding to increase user engagement; it's assistive in nature, it focuses on one question at a time, it shows the progress of completion, and it's mobile-first in design:
+
+![New Onboarding Process 1](https://miro.medium.com/v2/resize:fit:1696/1*D-Ae0DG9vmYww1BZB_jJzQ.png)
+
+![New Onboarding Process 2](https://miro.medium.com/v2/resize:fit:1696/1*-WqrSc1u0geAYU-bS3mcIA.png)
 
 ### 2.2 Request for Comments
 
@@ -75,6 +85,9 @@ In the RFC, our team included the following topics to finalize before moving to 
 - **Brainstorming on tools and libraries**: we used criterion metrics to choose cutting-edge, stable, and future-proof solutions. We used Github Insights, NpmTrends, BundlePhobia and NPMCompare extensively.
 - **Finalise of design system**: criteria metrics were specific to the design system — scalability, maintainability, consistency, level of customisation for white labeling, UX performance, number of components provided out of the box, learning curve.
 - **Alternative approaches for rendering mechanism**: we chose CSR because SEO wasn't needed for this project.
+
+![SSR vs CSR criterion metrics](https://miro.medium.com/v2/0*n5GftMN2PGgV03vI)
+
 - **PWA capabilities**: discussed all PWA capabilities to provide UX as close as native apps.
 - **Delightful features**: support for theming for white labeling and multiple languages.
 
@@ -91,6 +104,8 @@ We had to finalize the design system before the technical specs to maximize the 
 
 We created the board to track the milestones. Developers, EMs, product managers, and designers worked together to set the milestones so that everyone involved in the project knew about each unique dependency.
 
+![Project timeline planning](https://miro.medium.com/v2/0*QH2PbWPyOM2VewTC)
+
 We scoped the project according to priorities. All developers came together, broken down all the tasks into subtasks, and t-shirt sized all the development action items.
 
 ### 2.5 Tech Specs
@@ -98,6 +113,9 @@ We scoped the project according to priorities. All developers came together, bro
 - **Call out current and future scope**: necessary to figure out how much bandwidth each action item would need and break the application into pieces that could be handled.
 - **Detailed architecture setup**: we built the architecture by considering three major areas: authentication flow, dependent services, and DDoS attack prevention.
 - **Scaffolding**: robust in-house scaffolding for CSR apps that takes care of basic setup of Analytics, AB experiments, error monitoring SDKs, RTL, jest, linting.
+
+![Lord Bobby favoring our Frontend Starter Kit](https://miro.medium.com/v2/0*Y5p7uDsjcz3YnitP)
+
 - **State Management**: our custom hooks with react query to generalize the solution for all the different modules.
 - **PWA capabilities**: caching to pre-cache all routes for butter smooth navigation across the SPA, native app experience with full screen support, installable on desktop and mobile.
 

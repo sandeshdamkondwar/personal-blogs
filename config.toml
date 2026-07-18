@@ -109,6 +109,10 @@ enableEmoji = true
     [params.page.comment]
       enable = false
 
+[caches]
+  [caches.assets]
+    maxAge = "0s"
+
 [markup]
   [markup.highlight]
     codeFences = true

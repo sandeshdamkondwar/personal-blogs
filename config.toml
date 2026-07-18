@@ -23,6 +23,11 @@ enableEmoji = true
     url = "/tags/"
   [[menu.main]]
     weight = 3
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+  [[menu.main]]
+    weight = 4
     identifier = "github"
     pre = "<i class='fab fa-github fa-fw' aria-hidden='true'></i>"
     name = ""

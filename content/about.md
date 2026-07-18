@@ -14,7 +14,7 @@ When I'm off-duty, you'll find me immersed in the latest tech news or indulging 
 
 ## Work
 
-[AlphaSense](https://www.alphasense.com)
+[AlphaSense](https://www.alpha-sense.com)
 
 ## Education
 

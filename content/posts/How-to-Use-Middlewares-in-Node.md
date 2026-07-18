@@ -2,6 +2,9 @@
 title: "How to Use Middlewares in Node"
 date: 2020-02-19T01:19:07+05:30
 draft: false
+description: "A practical guide to understanding and using middlewares in Node.js and Express — from application-level to error handling."
+tags: ["Node.js", "JavaScript", "Express", "Backend"]
+categories: ["Engineering"]
 ---
 
 

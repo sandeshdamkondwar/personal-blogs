@@ -2,6 +2,9 @@
 title: "High Availability on Razorpay Payments Dashboard"
 date: 2022-03-14T00:00:00+05:30
 draft: false
+description: "How we reduced crashes 350x and pushed crash-free sessions to 99.9% across a 12,000-file codebase with 40+ engineers."
+tags: ["Frontend", "Reliability", "JavaScript", "Engineering", "Razorpay"]
+categories: ["Engineering"]
 ---
 
 *Originally published on [Razorpay Engineering](https://engineering.razorpay.com/high-availability-on-razorpay-payments-dashboard-c4a09f66aa61)*

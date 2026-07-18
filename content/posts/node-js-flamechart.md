@@ -2,6 +2,9 @@
 title: "Generate a NodeJS Flamechart"
 date: 2019-01-11T00:30:48+05:30
 draft: false
+description: "How to generate a Node.js flame graph using linux perf to diagnose performance bottlenecks."
+tags: ["Node.js", "JavaScript", "Performance", "Debugging"]
+categories: ["Engineering"]
 ---
 
 

@@ -2,6 +2,9 @@
 title: "How we redesigned and rearchitected our Merchant Experience"
 date: 2022-12-21T00:00:00+05:30
 draft: false
+description: "How we turned an 89% dropout rate around by rebuilding Razorpay's merchant onboarding as a PWA with a design system, GraphQL, and mobile-first UX."
+tags: ["React", "Frontend", "PWA", "GraphQL", "UX", "Razorpay"]
+categories: ["Engineering"]
 ---
 
 *Originally published on [Razorpay Engineering](https://engineering.razorpay.com/redesigning-rearchitecting-the-merchant-experience-d788bb44e526)*

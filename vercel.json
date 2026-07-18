@@ -3,5 +3,6 @@
     "env": {
       "HUGO_VERSION": "0.146.0"
     }
-  }
+  },
+  "buildCommand": "rm -rf themes/LoveIt/resources resources && hugo --minify"
 }

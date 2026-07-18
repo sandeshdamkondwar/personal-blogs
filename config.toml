@@ -132,4 +132,4 @@ enableEmoji = true
   taxonomy = ["HTML", "RSS"]
 
 [permalinks]
-  posts = ":contentbasename"
+  posts = ":filename"

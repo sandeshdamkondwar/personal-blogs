@@ -2,3 +2,38 @@
 // Custom style
 // 自定义样式
 // ==============================
+
+// UI controls that were changed from <a href="javascript:void(0)"> to
+// <button> (for SEO/crawlability) need to keep looking like the plain
+// links they replaced, since browsers apply default button chrome and
+// the theme's link color/hover styles only target <a> elements.
+.search-button,
+.search-cancel,
+.theme-switch,
+.link-button,
+.post-info-share button {
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  text-align: inherit;
+  color: $global-link-color;
+  cursor: pointer;
+  text-decoration: none;
+
+  [theme=dark] & {
+    color: $global-link-color-dark;
+  }
+
+  &:hover,
+  &:active {
+    color: $global-link-hover-color;
+
+    [theme=dark] & {
+      color: $global-link-hover-color-dark;
+    }
+  }
+}

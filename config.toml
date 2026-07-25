@@ -38,7 +38,10 @@ enableEmoji = true
   defaultTheme = "auto"
   dateFormat = "January 2, 2006"
   title = "Sandesh Damkondwar"
-  description = "Frontend Engineer. Writing about JavaScript, React, performance, and engineering culture."
+  description = "Sandesh Damkondwar — Frontend Engineer. Writing about JavaScript, React, performance, and engineering culture."
+
+  [params.app]
+    title = "Sandesh Damkondwar"
 
   [params.author]
     name = "Sandesh Damkondwar"

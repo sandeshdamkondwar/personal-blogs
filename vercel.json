@@ -1,8 +1,25 @@
 {
-  "build": {
-    "env": {
-      "HUGO_VERSION": "0.146.0"
+  "framework": null,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm ci",
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/posts",
+      "destination": "/#writing",
+      "permanent": true
+    },
+    {
+      "source": "/about",
+      "destination": "/#about",
+      "permanent": true
+    },
+    {
+      "source": "/tags",
+      "destination": "/#writing",
+      "permanent": true
     }
-  },
-  "buildCommand": "rm -rf themes/LoveIt/resources resources && hugo --minify"
+  ]
 }

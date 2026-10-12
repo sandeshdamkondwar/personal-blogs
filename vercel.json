@@ -12,11 +12,6 @@
       "permanent": true
     },
     {
-      "source": "/about",
-      "destination": "/#about",
-      "permanent": true
-    },
-    {
       "source": "/tags",
       "destination": "/#writing",
       "permanent": true

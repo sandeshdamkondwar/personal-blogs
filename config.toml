@@ -43,6 +43,11 @@ enableEmoji = true
   [params.app]
     title = "Sandesh Damkondwar"
 
+  [params.analytics]
+    [params.analytics.google]
+      id = "G-RWT5HK3R6M"
+      respectDoNotTrack = true
+
   [params.author]
     name = "Sandesh Damkondwar"
     email = "sandeshdamkondwar@gmail.com"

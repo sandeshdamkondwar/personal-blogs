@@ -57,7 +57,7 @@ SA.ui = (function () {
   function setupCTA() {
     const h = (SA.CTA.xHandle || "").replace(/^@/, "");
     const follow = $("#ctaLink"), share = $("#ctaShare");
-    if (h) { follow.href = `https://x.com/${encodeURIComponent(h)}`; $("#ctaLabel").textContent = `Follow @${h}`; }
+    if (h) { follow.href = `https://x.com/${encodeURIComponent(h)}`; $("#ctaLabel").innerHTML = `Follow<span class="cta-handle"> @${h}</span>`; }
     else follow.hidden = true;
     const url = location.origin + location.pathname;                     // never share the kid's name from ?kid=
     share.href = "https://x.com/intent/post?text=" + encodeURIComponent(`My kid just flew a rocket to Saturn 🚀🪐 A free 3D space adventure that stars YOUR kid${h ? ` by @${h}` : ""}`) + "&url=" + encodeURIComponent(url);

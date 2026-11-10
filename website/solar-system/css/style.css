@@ -305,3 +305,37 @@ button { font-family: inherit; cursor: pointer; color: inherit; }
 .credits { margin: 10px 0 0; font-size: .72rem; color: #a99fe0; text-align: center; }
 .credits a { color: #cfc8ff; }
 @keyframes nudgeX { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+
+/* Contributor credit, top right */
+.hud-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; pointer-events: none; min-width: 0; }
+.contrib { pointer-events: auto; display: inline-flex; align-items: center; gap: 8px; padding: 4px 10px 4px 4px; border-radius: 999px; background: var(--glass); border: 2px solid var(--glass-b); backdrop-filter: blur(8px); color: #fff; text-decoration: none; transition: transform .15s, border-color .2s; }
+.contrib:hover { transform: translateY(-1px); border-color: var(--gold); }
+.contrib-badge { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, #ffd166, #ff6b9d); color: #2b1a00; font-family: var(--ft); font-weight: 800; font-size: .8rem; }
+.contrib-text { display: flex; flex-direction: column; line-height: 1.05; }
+.contrib-text small { font-size: .62rem; color: #cfc8ff; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; }
+.contrib-text b { font-size: .82rem; }
+.contrib-x { font-size: .85rem; opacity: .85; }
+@media (max-width: 760px) {
+  .hud-right { align-items: stretch; }
+  .contrib { position: absolute; top: 0; right: 10px; padding: 3px 8px 3px 3px; gap: 6px; }
+  .contrib-text small { display: none; }
+  .contrib-text b { font-size: .72rem; }
+  .contrib-badge { width: 24px; height: 24px; font-size: .7rem; }
+  .brand { padding-right: 150px; }
+  .brand h1 { font-size: .98rem; }
+}
+
+/* desktop: the contributor pill adds a row on the right, so push the floating HUD bits down */
+@media (min-width: 761px) {
+  .hint { top: calc(122px + var(--sa-top)); }
+  .toast { top: calc(166px + var(--sa-top)); }
+  .panel { top: calc(120px + var(--sa-top)); }
+  .compass { top: calc(236px + var(--sa-top)); }
+  #minimap { top: calc(282px + var(--sa-top)); }
+  .postcard { top: calc(84px + var(--sa-top)); }
+}
+@media (max-width: 760px) {
+  .cta-handle { display: none; }
+  .cta { flex-wrap: nowrap; }
+  .cta-text { min-width: 0; white-space: nowrap; }
+}

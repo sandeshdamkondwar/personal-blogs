@@ -2,7 +2,7 @@
 window.SA = window.SA || {};
 
 SA.KID = {
-  name: "",                       // default kid name (empty = ask on first visit). A link like ?kid=Swaraj presets it.
+  name: "",                       // default kid name (empty = ask on first visit). A link like ?kid=Mia presets it.
 };
 
 /* Bottom bar: follow / share on X */
@@ -20,7 +20,7 @@ SA.kidStore = (function () {
     photos: () => get(KEY, []),                       // [{ sticker: dataURL, pose: dataURL }]
     savePhotos: (list) => set(KEY, list),
     name: () => {
-      const fromLink = new URLSearchParams(location.search).get("kid");      // ?kid=Swaraj
+      const fromLink = new URLSearchParams(location.search).get("kid");      // e.g. ?kid=Mia
       if (fromLink && fromLink.trim()) { const n = fromLink.trim().slice(0, 18); set(NKEY, n); return n; }
       return get(NKEY, "") || SA.KID.name || "";
     },

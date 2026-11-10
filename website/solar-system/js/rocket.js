@@ -24,7 +24,7 @@ SA.rocket = (function () {
     const earth = startNear;
     S.landDir.set(earth.pos.x, 0, earth.pos.z).normalize().multiplyScalar(-1);   // sunny side of Earth
     S.pos.copy(earth.pos).addScaledVector(S.landDir, earth.r + 0.9);
-    S.state = "landed"; S.landedOn = earth;
+    S.state = "landed"; S.landedOn = earth; S.landT = 9;
     S.heading = Math.atan2(S.landDir.x, S.landDir.z);
     group.position.copy(S.pos);
   }
@@ -155,7 +155,9 @@ SA.rocket = (function () {
     if (S.state === "landed") {
       const b = S.landedOn;
       const desired = b.pos.clone().addScaledVector(S.landDir, b.r + 0.9);
-      S.pos.lerp(desired, 1 - Math.exp(-7 * dt));
+      S.landT = (S.landT || 0) + dt;
+      if (S.landT > 0.6) S.pos.copy(desired);                 // rigidly attached: the planet can never leave the rocket behind
+      else S.pos.lerp(desired, 1 - Math.exp(-12 * dt));
       group.position.copy(S.pos);
       const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), S.landDir);
       group.quaternion.slerp(q, 1 - Math.exp(-7 * dt));
@@ -255,7 +257,7 @@ SA.rocket = (function () {
     S.landDir.set(S.pos.x - b.pos.x, 0, S.pos.z - b.pos.z);
     if (S.landDir.lengthSq() < 0.001) S.landDir.set(1, 0, 0);
     S.landDir.normalize();
-    S.state = "landed"; S.landedOn = b; S.autoTarget = null;
+    S.state = "landed"; S.landedOn = b; S.autoTarget = null; S.landT = 0;
     S.vel.set(0, 0, 0); S.thrust = 0;
     emit("land", b);
   }

@@ -102,7 +102,15 @@ SA.controls = (function () {
     if (input.anyManual || rocket.state === "auto") cam.focusSun = false;
 
     // Follow target
-    const want = cam.focusSun ? new THREE.Vector3(0, 0, 0) : rocket.pos;
+    const landedOn = rocket.state === "landed" ? rocket.landedOn : null;
+    let want = cam.focusSun ? new THREE.Vector3(0, 0, 0) : rocket.pos;
+    if (landedOn && !cam.focusSun) {
+      // Lock onto the planet: move the camera target by exactly the planet's own motion, so it stays put on screen
+      if (cam.lockBody === landedOn) cam.target.add(landedOn.pos).sub(cam.lockPos);
+      else cam.lockPos = new THREE.Vector3();
+      cam.lockBody = landedOn; cam.lockPos.copy(landedOn.pos);
+      want = landedOn.pos;
+    } else cam.lockBody = null;
     cam.target.lerp(want, 1 - Math.exp(-5 * dt));
 
     // Camera swings behind the rocket while it flies, unless the kid is dragging the view
@@ -120,11 +128,22 @@ SA.controls = (function () {
       cam.target.y + sp * cam.dist,
       cam.target.z + Math.cos(cam.yaw) * cp * cam.dist);
     camera.lookAt(cam.target.x, cam.target.y + 0.5, cam.target.z);
+
+    // When the info card is open, slide the picture so the planet sits in the part of the screen the card doesn't cover
+    const w = window.innerWidth, h = window.innerHeight, open = document.body.classList.contains("panel-open");
+    const mobile = w <= 760;
+    const tx = open && !mobile ? 205 : 0, ty = open && mobile ? h * 0.27 : 0;
+    cam.offX = (cam.offX || 0) + (tx - (cam.offX || 0)) * Math.min(1, dt * 5);
+    cam.offY = (cam.offY || 0) + (ty - (cam.offY || 0)) * Math.min(1, dt * 5);
+    if (Math.abs(cam.offX) > 0.5 || Math.abs(cam.offY) > 0.5) camera.setViewOffset(w, h, cam.offX, cam.offY, w, h);
+    else if (camera.view) camera.clearViewOffset();
   }
 
   function overview() { cam.focusSun = true; cam.distT = 250; cam.pitchT = 1.05; cam.userRotatedT = 0; }
   function zoomTo(dist, pitch) { cam.distT = dist; if (pitch !== undefined) cam.pitchT = pitch; cam.focusSun = false; }
-  function closeUp() { cam.distT = 8.5; cam.pitchT = 0.32; cam.focusSun = false; cam.userRotatedT = 0; }
+  function closeUp(r = 1.5) {
+    // far enough that the whole planet fits in the free part of the screen
+    cam.distT = window.innerWidth <= 760 ? Math.max(10, r * 8.6) : Math.max(8.5, r * 3.6 + 4); cam.pitchT = 0.32; cam.focusSun = false; cam.userRotatedT = 0; }
 
   return { init, update, overview, zoomTo, closeUp, input, cam, get pilotingStarted() { return pilotingStarted; } };
 })();

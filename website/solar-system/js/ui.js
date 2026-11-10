@@ -151,7 +151,12 @@ SA.ui = (function () {
     $("#btnLand").addEventListener("click", landOrTakeoff);
     $$("[data-close]").forEach((b) => b.addEventListener("click", () => closeOverlays()));
     $$(".overlay").forEach((o) => o.addEventListener("pointerdown", (e) => { if (e.target === o) closeOverlays(); }));
-    $("#panelClose").addEventListener("click", () => SA.rocket.takeOff());
+    // ✕ only closes the card. The rocket stays landed; tap the planet (or its chip) to open the card again.
+    $("#panelClose").addEventListener("click", (e) => {
+      e.stopPropagation(); lastUiTap = performance.now();
+      $("#panel").hidden = true; document.body.classList.remove("panel-open"); SA.speech.stop();
+      if (state.current) setHint(`👆 Tap ${state.current.def.name} to see its facts again, or 🚀 to take off.`);
+    });
   }
   function openOverlay(sel) { closeOverlays(); $(sel).hidden = false; SA.audio.tick(); }
   function closeOverlays() { $$(".overlay").forEach((o) => { if (o.id !== "welcome") o.hidden = true; }); stopPreview(); }
@@ -171,7 +176,9 @@ SA.ui = (function () {
 
   /* Tap on the 3D scene */
   const raycaster = { r: null };
+  let lastUiTap = 0;
   function onTap(nx, ny) {
+    if (performance.now() - lastUiTap < 500) return;       // a tap that just closed the card must not also hit the scene
     const THREE = state.THREE;
     raycaster.r = raycaster.r || new THREE.Raycaster();
     raycaster.r.setFromCamera(new THREE.Vector2(nx, ny), state.camera);
@@ -212,7 +219,7 @@ SA.ui = (function () {
   function onLand(b) {
     state.current = b;
     SA.audio.land();
-    SA.controls.closeUp();
+    SA.controls.closeUp(b.r);
     const isNew = !state.stamps.has(b.def.id);
     state.lastVisitWasNew = isNew;
     if (isNew) { state.stamps.add(b.def.id); LS.set("sa.stamps", [...state.stamps]); updateStampCount(); buildPassport(); }

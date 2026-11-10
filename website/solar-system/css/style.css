@@ -346,3 +346,5 @@ button { font-family: inherit; cursor: pointer; color: inherit; }
 body.cta-hidden .cta { display: none; }
 body.cta-hidden { --cta-h: 0px; }
 @media (max-width: 760px) { body.cta-hidden { --cta-h: 0px; } .cta-close { width: 26px; height: 26px; } }
+
+@media (max-width: 760px) { body.panel-open #minimap, body.panel-open .compass, body.panel-open .postcard { display: none; } .panel { max-height: 56vh; } }

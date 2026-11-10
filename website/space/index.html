@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <title>🚀 Space Adventure — Fly a rocket through the Solar System!</title>
+  <meta name="description" content="A 3D rocket adventure for kids: fly to every planet, collect passport stamps, weigh yourself on Jupiter, and build your own planet." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>" />
+</head>
+<body>
+  <canvas id="scene"></canvas>
+  <div id="labels" aria-hidden="true"></div>
+
+  <!-- ===== HUD ===== -->
+  <header class="hud-top">
+    <div class="brand">
+      <img class="avatar" id="hudAvatar" data-kid="sticker" data-i="0" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" />
+      <div><h1>Space Adventure</h1><div class="captain" id="captainName">🚀 Built only for you</div></div>
+    </div>
+    <div class="hud-buttons">
+      <button class="hb" id="btnOverview" title="See the whole solar system">🗺️<small>Map</small></button>
+      <button class="hb active" id="btnLabels" title="Show planet names">🏷️<small>Names</small></button>
+      <button class="hb" id="btnSize" title="Show true sizes">🔬<small>True size</small></button>
+      <button class="hb" id="btnSpeed" title="Make time go faster">⏩<small id="speedVal">1x</small></button>
+      <button class="hb active" id="btnSound" title="Sound on/off">🔊<small>Sound</small></button>
+      <button class="hb" id="btnVoicePick" title="Try a different reading voice">🗣️<small>Voice</small></button>
+      <button class="hb" id="btnVoice" title="Say a planet name">🎤<small>Say it</small></button>
+      <button class="hb" id="btnTour" title="Take the grand tour">🎢<small>Tour</small></button>
+      <button class="hb" id="btnGame" title="Play Find It">🎯<small>Find it <span id="gameScore"></span></small></button>
+      <button class="hb" id="btnBuild" title="Build your own planet">🪐<small>Make one</small></button>
+      <button class="hb" id="btnSetup" title="Parent setup: name and photos">⚙️<small>Parent</small></button>
+      <button class="hb" id="btnPassport" title="Open your passport">📘<small id="stampCount">0/11</small></button>
+    </div>
+  </header>
+
+  <div class="hint" id="hint"></div>
+  <div class="toast" id="toast"></div>
+
+  <div class="compass" id="compass" hidden><span class="arrow" id="compassArrow">➤</span><span id="compassText"></span></div>
+  <canvas id="minimap" width="170" height="170" aria-label="Map of the solar system"></canvas>
+
+  <!-- ===== Flight controls ===== -->
+  <div class="joystick" id="joystick" aria-label="Steering joystick"><div class="knob" id="joyKnob"><img data-kid="sticker" data-i="0" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" /></div></div>
+  <div class="touch-buttons">
+    <button class="tb" id="btnThrust">🔥<small>Boost</small></button>
+    <button class="tb" id="btnLand">🛬<small>Land</small></button>
+  </div>
+  <div class="keys-help">⬆️ fly &nbsp;·&nbsp; ⬅️ ➡️ steer &nbsp;·&nbsp; ⬇️ brake &nbsp;·&nbsp; space = land / take off &nbsp;·&nbsp; drag to look around</div>
+
+  <!-- ===== Planet dock ===== -->
+  <nav class="dock" id="dock" aria-label="Fly to a planet"></nav>
+
+  <!-- ===== Planet panel (shown when landed) ===== -->
+  <aside class="panel" id="panel" hidden>
+    <button class="panel-close" id="panelClose" aria-label="Take off">✖</button>
+    <div class="panel-head">
+      <span class="pe" id="panelEmoji">🪐</span>
+      <div>
+        <h2 id="panelName">Planet</h2>
+        <p class="tag" id="panelTag"></p>
+      </div>
+      <span class="newstamp" id="panelStamp" hidden>NEW<br>STAMP!</span>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="facts">📖 Facts</button>
+      <button class="tab" data-tab="weigh">⚖️ Weigh me</button>
+      <button class="tab" data-tab="birthday">🎂 Birthday</button>
+      <button class="tab" data-tab="jump">🦘 Jump</button>
+    </div>
+
+    <div class="tabpane" data-pane="facts">
+      <ul class="facts" id="facts"></ul>
+      <div class="row">
+        <button class="big-btn gold" id="btnRead">🔊 Read to me</button>
+        <button class="big-btn mint" id="btnMoreFact">🎲 Another fact!</button>
+      </div>
+    </div>
+
+    <div class="tabpane" data-pane="weigh" hidden>
+      <p class="lab-q">On Earth I weigh <b><span id="weightVal">20</span> kg</b></p>
+      <input type="range" id="weightIn" min="8" max="90" value="20" />
+      <div class="lab-result">
+        <div class="figure" id="weightFigure"></div>
+        <div>Here on <b id="weightWhere"></b> you'd weigh<div class="huge"><span id="weightOut">20</span> kg</div></div>
+      </div>
+      <p class="lab-msg" id="weightMsg"></p>
+    </div>
+
+    <div class="tabpane" data-pane="birthday" hidden>
+      <p class="lab-q">I am <b><span id="ageVal">5</span> years old</b></p>
+      <input type="range" id="ageIn" min="1" max="14" value="5" />
+      <p class="lab-out" id="ageOut"></p>
+      <p class="cakes" id="cakes"></p>
+      <p class="lab-msg" id="ageDetail"></p>
+      <p class="lab-msg" id="dayDetail"></p>
+    </div>
+
+    <div class="tabpane" data-pane="jump" hidden>
+      <p class="lab-q">On Earth you can jump about <b>30 cm</b>.</p>
+      <div class="jumpbox" id="jumpBox"><div class="ground"></div><div class="jumper" id="jumper"></div></div>
+      <p class="lab-out">On <b id="jumpWhere"></b> you could jump <span class="huge" id="jumpOut">30 cm</span></p>
+      <p class="lab-msg" id="jumpMsg"></p>
+    </div>
+
+    <div class="panel-foot">
+      <button class="big-btn rocket" id="btnTakeOff">🚀 Take off</button>
+      <button class="big-btn ghost" id="btnNextPlanet">Next planet ➡️</button>
+      <button class="big-btn danger" id="btnRemovePlanet" hidden>🗑️ Remove</button>
+    </div>
+  </aside>
+
+  <!-- ===== Welcome ===== -->
+  <div class="overlay" id="welcome" hidden>
+    <div class="modal welcome">
+      <div class="hero">
+        <img class="float-sticker s1" data-kid="sticker" data-i="1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" />
+        <img class="float-sticker s2" data-kid="sticker" data-i="2" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" />
+        <img class="float-sticker s3" data-kid="sticker" data-i="0" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" />
+        <div class="hero-kid" id="welcomeKid"></div>
+      </div>
+      <div class="only-for" id="onlyFor">⭐ Built only for you ⭐</div>
+      <h2 id="welcomeTitle">Space Adventure</h2>
+      <p id="welcomeText">Fly your own rocket to every planet, collect passport stamps, and find out how much you'd weigh on Jupiter!</p>
+      <div class="ask-name" id="askName" hidden>
+        <label for="welcomeName">Who's the astronaut today?</label>
+        <input type="text" id="welcomeName" maxlength="18" placeholder="Type a name" autocomplete="off" />
+      </div>
+      <button class="big-btn gold xl" id="btnBlastOff">🚀 Blast off!</button>
+      <button class="linkish" id="btnWelcomeSetup">👪 Grown-ups: add photos</button>
+    </div>
+  </div>
+
+  <!-- ===== Passport ===== -->
+  <div class="overlay" id="passport" hidden>
+    <div class="modal">
+      <button class="modal-close" data-close aria-label="Close">✖</button>
+      <div class="passport-id">
+        <img class="passport-photo" data-kid="sticker" data-i="2" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" />
+        <div><div class="pid-small">SPACE PASSPORT · OFFICIAL EXPLORER</div><h2 id="passportTitle">My Passport</h2><div class="pid-small">Home planet: 🌍 Earth &nbsp;·&nbsp; Rocket: 🚀 Number 1</div></div>
+      </div>
+      <p class="sub">Land on a planet to collect its stamp. Tap a stamp to fly there!</p>
+      <div class="stamp-grid" id="stampGrid"></div>
+    </div>
+  </div>
+
+  <!-- ===== Planet builder ===== -->
+  <div class="overlay" id="builder" hidden>
+    <div class="modal builder">
+      <button class="modal-close" data-close aria-label="Close">✖</button>
+      <h2>🪐 Make your own planet</h2>
+      <div class="builder-grid">
+        <canvas id="buildPreview" width="220" height="220"></canvas>
+        <div class="form">
+          <label>Name <input type="text" id="bName" maxlength="20" placeholder="Zorbo World" /></label>
+          <div class="two">
+            <label>Color 1 <input type="color" id="bC1" value="#ff6fb5" /></label>
+            <label>Color 2 <input type="color" id="bC2" value="#5be7ff" /></label>
+          </div>
+          <label>Pattern
+            <select id="bStyle">
+              <option value="swirly">🌀 Swirly</option>
+              <option value="stripes">🦓 Stripes</option>
+              <option value="spots">🐄 Spots</option>
+              <option value="craters">🕳️ Craters</option>
+            </select>
+          </label>
+          <label>Size — <b id="bSizeVal">medium</b> <input type="range" id="bSize" min="0.6" max="3.6" step="0.1" value="1.8" /></label>
+          <div class="two">
+            <label class="check"><input type="checkbox" id="bRing" checked /> Ring</label>
+            <label>Ring color <input type="color" id="bRingColor" value="#ffe08a" /></label>
+          </div>
+          <label>Moons <input type="range" id="bMoons" min="0" max="3" step="1" value="1" /></label>
+          <div class="row">
+            <button class="big-btn ghost" id="btnRandomPlanet">🎲 Surprise me</button>
+            <button class="big-btn gold" id="btnLaunchPlanet">🚀 Launch it!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Parent setup (photos stay on this device) ===== -->
+  <div class="overlay" id="setup" hidden>
+    <div class="modal setup">
+      <button class="modal-close" data-close aria-label="Close">✖</button>
+      <h2>👪 Parent setup</h2>
+      <p class="sub">🔒 Photos stay on this device. They're turned into cartoons right here in your browser and are never uploaded.</p>
+      <label class="setup-name">Kid's name <input type="text" id="setupName" maxlength="18" autocomplete="off" /></label>
+      <div class="setup-current" id="setupCurrent"></div>
+      <div class="crop-list" id="cropList"></div>
+      <label class="big-btn ghost file-btn" id="setupAddLabel">📷 Choose 2–3 photos (face clearly visible)
+        <input type="file" id="setupFiles" accept="image/*" multiple />
+      </label>
+      <p class="setup-status" id="setupStatus"></p>
+      <div class="row">
+        <button class="big-btn ghost" id="btnSetupClear">🗑️ Remove photos</button>
+        <button class="big-btn gold" id="btnSetupSave">✨ Make cartoons &amp; save</button>
+      </div>
+      <p class="credits">Planet maps © <a href="https://www.solarsystemscope.com/textures/" target="_blank" rel="noopener">Solar System Scope</a> (CC BY 4.0), based on NASA data. 3D by three.js.</p>
+    </div>
+  </div>
+
+  <!-- Postcard of him that pops up on each landing -->
+  <div class="postcard" id="postcard" aria-live="polite">
+    <img id="postcardImg" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" />
+    <span class="pc-planet" id="postcardPlanet">🪐</span>
+    <div class="pc-caption" id="postcardText"></div>
+  </div>
+
+  <!-- ===== Call to action for other parents ===== -->
+  <footer class="cta" id="cta">
+    <span class="cta-text"><span class="cta-long">✨ Make it star <b>your</b> kid: tap <button class="cta-inline" id="ctaSetup">⚙️ Parent</button> to add their name &amp; photos. Photos never leave your device.</span><span class="cta-short">✨ Star your kid: <button class="cta-inline" id="ctaSetupShort">⚙️ Parent</button></span></span>
+    <span class="cta-actions">
+      <a class="cta-btn ghost" id="ctaShare" href="https://x.com/intent/post" target="_blank" rel="noopener">Share</a>
+      <a class="cta-btn" id="ctaLink" href="https://x.com" target="_blank" rel="noopener">𝕏 <span id="ctaLabel">Follow</span></a>
+    </span>
+  </footer>
+
+  <div id="confetti" aria-hidden="true"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/kid.js"></script>
+  <script src="js/cartoon.js"></script>
+  <script src="js/setup.js"></script>
+  <script src="js/textures.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/speech.js"></script>
+  <script src="js/sun.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/rocket.js"></script>
+  <script src="js/controls.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

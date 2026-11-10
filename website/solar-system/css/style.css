@@ -339,3 +339,10 @@ button { font-family: inherit; cursor: pointer; color: inherit; }
   .cta { flex-wrap: nowrap; }
   .cta-text { min-width: 0; white-space: nowrap; }
 }
+
+/* Dismissable bottom bar */
+.cta-close { flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; border: 0; background: rgba(0,0,0,.2); color: #2b1a00; font-weight: 800; font-size: .85rem; line-height: 1; }
+.cta-close:hover { background: rgba(0,0,0,.35); color: #fff; }
+body.cta-hidden .cta { display: none; }
+body.cta-hidden { --cta-h: 0px; }
+@media (max-width: 760px) { body.cta-hidden { --cta-h: 0px; } .cta-close { width: 26px; height: 26px; } }

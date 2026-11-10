@@ -63,6 +63,9 @@ SA.ui = (function () {
     share.href = "https://x.com/intent/post?text=" + encodeURIComponent(`My kid just flew a rocket to Saturn 🚀🪐 A free 3D space adventure that stars YOUR kid${h ? ` by @${h}` : ""}`) + "&url=" + encodeURIComponent(url);
     [follow, share].forEach((a) => a.addEventListener("click", () => SA.audio.tick()));
     ["#ctaSetup", "#ctaSetupShort"].forEach((s) => $(s).addEventListener("click", () => { closeOverlays(); SA.setup.open(); }));
+    // dismissable: remembered in this browser
+    if (LS.get("sa.ctaHidden", false)) document.body.classList.add("cta-hidden");
+    $("#ctaClose").addEventListener("click", () => { document.body.classList.add("cta-hidden"); LS.set("sa.ctaHidden", true); SA.audio.tick(); });
   }
   function applyNameText() {
     const n = state.captain;
